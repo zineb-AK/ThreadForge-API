@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\bleuprint;
+use App\Models\Blueprint;
 use Illuminate\Http\Request;
 
-class BleuprintController extends Controller
+class BlueprintController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $blueprints=Blueprint::all();
+        return response()->json($blueprints);
     }
 
     /**
@@ -20,21 +21,21 @@ class BleuprintController extends Controller
      */
     public function create()
     {
-        //
+        
     }
-
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        //
+        $blueprint=Blueprint::create($request->all());
+        return response()->json($blueprint, 201);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(bleuprint $bleuprint)
+    public function show(Blueprint $blueprint)
     {
         //
     }
@@ -42,7 +43,7 @@ class BleuprintController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(bleuprint $bleuprint)
+    public function edit(Blueprint $blueprint)
     {
         //
     }
@@ -50,7 +51,7 @@ class BleuprintController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, bleuprint $bleuprint)
+    public function update(Request $request, Blueprint $blueprint)
     {
         //
     }
@@ -58,7 +59,7 @@ class BleuprintController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(bleuprint $bleuprint)
+    public function destroy(Blueprint $blueprint)
     {
         //
     }
