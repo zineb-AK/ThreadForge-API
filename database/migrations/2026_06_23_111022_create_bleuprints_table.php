@@ -11,8 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('bleuprints', function (Blueprint $table) {
+        Schema::create('blueprints', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('tone');
+            $table->string('target_audience');
+            $table->integer('max_characters');
+            $table->integer('max_hashtags');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -22,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('bleuprints');
+        Schema::dropIfExists('blueprints');
     }
 };
