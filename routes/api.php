@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AiController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\BlueprintController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,7 +16,10 @@ Route::middleware('auth:sanctum')->group(function () {
         return $request->user();});
 
     Route::post('/logout', [AuthController::class, 'logout']);
-    Route::post('/ai/chat', [AiController::class, 'chat']);
+    // Route::post('/ai/chat', [AiController::class, 'chat']);
+    Route::get('/blueprints', [BlueprintController::class, 'index']);
+    Route::post('/blueprints', [BlueprintController::class, 'store']);
+    Route::get('/blueprints/{blueprint}', [BlueprintController::class, 'show']);
     
 });
 
