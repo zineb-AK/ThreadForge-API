@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\BlueprintResource;
 use App\Models\Blueprint;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreBlueprintRequest;
 
 class BlueprintController extends Controller
 {
@@ -12,8 +14,8 @@ class BlueprintController extends Controller
      */
     public function index()
     {
-        $blueprints=Blueprint::all();
-        return response()->json($blueprints);
+        $blueprints=Blueprint::where('user_id', auth()->id())->get();
+        return BlueprintResource::collection($blueprints);
     }
 
     /**
@@ -26,10 +28,18 @@ class BlueprintController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreBlueprintRequest $request)
     {
-        $blueprint=Blueprint::create($request->all());
-        return response()->json($blueprint, 201);
+        $blueprint=Blueprint::create(
+            [
+                ...$request->validated(),
+                'user_id' => auth()->id()
+            ]
+        );
+        return response() ->json([
+            'message' => 'Blueprint created successfully',
+            'data' => new BlueprintResource($blueprint)
+        ], 201);
     }
 
     /**
@@ -37,7 +47,7 @@ class BlueprintController extends Controller
      */
     public function show(Blueprint $blueprint)
     {
-        //
+        return new BlueprintResource($blueprint);
     }
 
     /**
@@ -53,7 +63,8 @@ class BlueprintController extends Controller
      */
     public function update(Request $request, Blueprint $blueprint)
     {
-        //
+        $blueprint->update($request->validated());
+        return new BlueprintResource($blueprint);
     }
 
     /**
